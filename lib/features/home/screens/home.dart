@@ -1,27 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fquery/fquery.dart';
 import 'package:job_search_app/app_styles.dart';
 import 'package:job_search_app/features/job/domain/services/job_service.dart';
 import 'package:job_search_app/features/job/widgets/widgets.dart';
 import 'package:job_search_app/size_config.dart';
 
-class HomePage extends HookWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
-    final query = useQuery(['jobs'], () => JobService.getJobs());
-
-    if (query.data != null) {
-      debugPrint('DATA: ${query.data?.data.length}');
-    }
-
-    if (query.isError) {
-      debugPrint('ERROR: ${query.error}');
-    }
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -125,25 +113,25 @@ class HomePage extends HookWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              ListView.builder(
-                itemCount: query.data?.data.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final job = query.data?.data[index];
+              // ListView.builder(
+              //   itemCount: 5,
+              //   shrinkWrap: true,
+              //   itemBuilder: (context, index) {
+              //     final job = query.data?.data[index];
 
-                  if (job == null) return null;
+              //     if (job == null) return null;
 
-                  return JobCard(
-                    position: job.position,
-                    company: job.company,
-                    companyImage: job.companyImage,
-                    status: job.status,
-                    types: job.types,
-                    salary: job.salary,
-                    onTap: () {},
-                  );
-                },
-              ),
+              //     return JobCard(
+              //       position: job.position,
+              //       company: job.company,
+              //       companyImage: job.companyImage,
+              //       status: job.status,
+              //       types: job.types,
+              //       salary: job.salary,
+              //       onTap: () {},
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),
